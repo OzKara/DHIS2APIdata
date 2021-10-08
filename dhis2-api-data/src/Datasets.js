@@ -31,51 +31,54 @@ const dataQuery = {
 
 
 export function Datasets() {
-    const { loading, error, data } = useDataQuery(dataQuery)
-
+    const [table, setTable] = useState(false);
+    const { loading, error, data } = useDataQuery(dataQuery);
+  
     if (error) {
-        return <span>ERROR: {error.message}</span>
+      return <span>ERROR: {error.message}</span>;
     }
-
+  
     if (loading) {
-        return <CircularLoader large />
+      return <CircularLoader large />;
     }
-
+  
     if (data) {
-        console.log(data)
-        console.log(data.dataSets.dataSets)
-        return (
-            <>
-            <Menu>
-                {data.dataSets.dataSets.map(row => {
-                    return (
-                        <>
-                        <MenuItem
-                            key={row.id}
-                            label={row.displayName}
-                        >
-                        </MenuItem>
-                        <Table>
-                            <TableHead>
-                                <TableRowHead>
-                                    <TableCellHead>Display Name</TableCellHead>
-                                    <TableCellHead>ID</TableCellHead>
-                                    <TableCellHead>created</TableCellHead>
-                                </TableRowHead>
-                            </TableHead>
-                            <TableBody>
-                                <TableRow key={row.id}>
-                                    <TableCell>{row.displayName}</TableCell>
-                                    <TableCell>{row.id}</TableCell>
-                                    <TableCell>{row.created}</TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                        </>
-                    );
-                })}
-            </Menu>
-            </>
-        )
+      console.log(data);
+      console.log(data.dataSets.dataSets);
+      return (
+        <>
+          <Menu>
+            {data.dataSets.dataSets.map((row) => {
+              return (
+                <>
+                  <div onClick={() => setTable((prev) => !prev)}>
+                    {" "}
+                    <MenuItem key={row.id} label={row.displayName}></MenuItem>
+                  </div>
+                  {table && (
+                    <Table>
+                      <TableHead>
+                        <TableRowHead>
+                          <TableCellHead>Display Name</TableCellHead>
+                          <TableCellHead>ID</TableCellHead>
+                          <TableCellHead>created</TableCellHead>
+                        </TableRowHead>
+                      </TableHead>
+                      <TableBody>
+                        <TableRow key={row.id}>
+                          <TableCell>{row.displayName}</TableCell>
+                          <TableCell>{row.id}</TableCell>
+                          <TableCell>{row.created}</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  )}
+                </>
+              );
+            })}
+          </Menu>
+        </>
+        
+      );
     }
-}
+  }
