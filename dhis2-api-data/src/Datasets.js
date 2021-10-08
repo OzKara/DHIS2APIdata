@@ -1,4 +1,64 @@
-import React from 'react';
+import React from "react";
+
+import { useDataQuery } from "@dhis2/app-runtime";
+import {
+  CircularLoader,
+  Menu,
+  MenuItem,
+  Table,
+  TableBody,
+  TableCell,
+  TableCellHead,
+  TableHead,
+  TableRow,
+  TableRowHead,
+} from "@dhis2/ui";
+import SingleDataset from "./SingleDataset";
+
+const dataQuery = {
+  dataSets: {
+    resource: "dataSets",
+    params: {
+      fields: [
+        "id",
+        "displayName",
+        "created",
+        //dataSetElements[dataElement[id, displayName, created]
+      ],
+      paging: false,
+    },
+  },
+};
+
+export function Datasets() {
+  const { loading, error, data } = useDataQuery(dataQuery);
+
+  if (error) {
+    return <span>ERROR: {error.message}</span>;
+  }
+
+  if (loading) {
+    return <CircularLoader large />;
+  }
+
+  if (data) {
+    console.log(data);
+    console.log(data.dataSets.dataSets);
+    return (
+      <>
+        <Menu>
+          {data.dataSets.dataSets.map((row) => {
+            return <SingleDataset row={row} />;
+          })}
+        </Menu>
+      </>
+    );
+  }
+}
+
+
+
+/*import React from 'react';
 import { useState } from "react";
 import { useDataQuery } from '@dhis2/app-runtime';
 import { 
@@ -81,4 +141,4 @@ export function Datasets() {
         
       );
     }
-  }
+  }*/
