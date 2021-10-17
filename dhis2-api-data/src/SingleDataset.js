@@ -2,9 +2,6 @@ import React from "react";
 import { useState } from "react";
 import classes from "./App.module.css";
 import {
-  CircularLoader,
-  Menu,
-  MenuItem,
   Table,
   TableBody,
   TableCell,
@@ -13,16 +10,10 @@ import {
   TableRow,
   TableRowHead,
 } from "@dhis2/ui";
-const SingleDataset = ({ row }) => {
-  const [table, setTable] = useState(false);
+function SingleDataset(props) {
   return (
     <>
-      <div onClick={() => setTable((prev) => !prev)}>
-        {" "}
-        <MenuItem key={row.id} label={row.displayName}></MenuItem>
-      </div>
       <div className={classes.table}>
-      {table && (
         <Table>
           <TableHead>
             <TableRowHead>
@@ -32,16 +23,16 @@ const SingleDataset = ({ row }) => {
             </TableRowHead>
           </TableHead>
           <TableBody>
-            <TableRow key={row.id}>
-              <TableCell>{row.displayName}</TableCell>
-              <TableCell>{row.id}</TableCell>
-              <TableCell>{row.created}</TableCell>
+            <TableRow key={props.active.id}>
+              <TableCell>{props.active.displayName}</TableCell>
+              <TableCell>{props.active.id}</TableCell>
+              <TableCell>{props.active.created}</TableCell>
             </TableRow>
           </TableBody>
         </Table>
-      )}
       </div>
     </>
   );
 };
+
 export default SingleDataset;

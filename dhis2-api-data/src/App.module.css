@@ -16,5 +16,14 @@
   background: #f0f0f0;
 }
 
+.datasetsContainer {
+  display: flex;
+}
+
 .table {
+  flex-basis: 50%;
+}
+
+.menu {
+  flex-basis: 50%;
 }
